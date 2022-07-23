@@ -2,6 +2,8 @@ package ru.netology.repo;
 
 import ru.netology.parentclass.Product;
 
+import java.nio.file.FileAlreadyExistsException;
+
 public class Repository {
     protected Product[] items = new Product[0];
 
@@ -14,6 +16,9 @@ public class Repository {
     }
 
     public void save(Product item) {
+        if (findById(item.getId()) != null) {
+            throw new AlreadyExistsException("Товар с id " + item.getId() + "уже есть в корзине");
+        }
         Product[] tmp = new Product[items.length + 1];
         for (int i = 0; i < items.length; i++) {
             tmp[i] = items[i];
@@ -21,11 +26,9 @@ public class Repository {
         tmp[tmp.length - 1] = item;
         items = tmp;
     }
-
     public Product[] findAll() {
         return items;
     }
-
     public Product findById(int id) {
         for (Product item : items) {
             if (item.getId() == id) {
@@ -51,3 +54,4 @@ public class Repository {
         items = tmp;
     }
 }
+

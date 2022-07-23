@@ -26,9 +26,24 @@ public class RepositoryTest {
     }
 
     @Test
-    public void shouldSave() {
-        Product[] expected = {item1, item2, item3, item4, item5};
+    public void shouldSaveItem() {
+        Product item6 = new Book(6, "BookName6", 200, "Author2");
+        repo.save(item6);
+        Product[] expected = {item1, item2, item3, item4, item5, item6};
         assertArrayEquals(expected, repo.findAll());
+    }
+    @Test
+    public void shouldFindById() {
+        repo.findById(3);
+        Product expected = item3;
+        assertEquals(expected, repo.findById(3));
+
+    }
+
+    @Test
+    public void shouldThrowExceptionIfIdExists() {
+        int id = 5;
+        assertThrows(AlreadyExistsException.class, () -> {repo.findById(5);});
     }
 
     @Test
