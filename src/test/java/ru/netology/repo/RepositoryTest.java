@@ -24,7 +24,6 @@ public class RepositoryTest {
         repo.save(item4);
         repo.save(item5);
     }
-
     @Test
     public void shouldSaveItem() {
         Product item6 = new Book(6, "BookName6", 200, "Author2");
@@ -37,13 +36,11 @@ public class RepositoryTest {
         repo.findById(3);
         Product expected = item3;
         assertEquals(expected, repo.findById(3));
-
     }
-
     @Test
     public void shouldThrowExceptionIfIdExists() {
-        int id = 5;
-        assertThrows(AlreadyExistsException.class, () -> {repo.findById(5);});
+        Product item6 = new Book(5, "BookName6", 200, "Author2");
+        assertThrows(AlreadyExistsException.class, () -> {repo.save(item6);});
     }
 
     @Test
